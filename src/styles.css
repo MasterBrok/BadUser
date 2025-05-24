@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --primary: #4F46E5;
+  --secondary: #6366F1;
+  --accent: #10B981;
+  --background: #F9FAFB;
+  --text: #1F2937;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary);
+}

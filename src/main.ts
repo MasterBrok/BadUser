@@ -5,3 +5,8 @@ platformBrowser().bootstrapModule(AppModule, {
   ngZoneEventCoalescing: true,
 })
   .catch(err => console.error(err));
+
+  export const environment = {
+  production: false,
+  apiUrl: 'https://brok.topshipping.co/api'
+};
