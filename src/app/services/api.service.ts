@@ -20,7 +20,7 @@ export class ApiService {
 
   // POST
   post(endpoint: string, body: any): Observable<NoDataApiResponse> {
-    return this.http.post<NoDataApiResponse>(`${this.baseUrl}/${endpoint}`, body, { withCredentials: true });
+    return this.http.post<NoDataApiResponse>(`${this.baseUrl}/${endpoint}`, body);
   }
 
   // // PUT
@@ -31,14 +31,15 @@ export class ApiService {
 }
 
 
-export interface ApiResponse<T = any> {
-  Success: boolean;
-  Messages: string[];
-  HttpCode: number;
-  Data?: T;
+export interface ApiResponse<T = any>  {
+  messages?: any;
+  response: T;
+  totalPages: number;
+  success: boolean;
+  httpCode: number;
 }
 export interface NoDataApiResponse {
-  Success: boolean;
-  Messages: string[];
-  HttpCode: number;
+  success: boolean;
+  messages: string[];
+  httpCode: number;
 }

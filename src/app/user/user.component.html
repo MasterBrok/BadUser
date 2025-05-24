@@ -1,0 +1,27 @@
+<!-- users.component.html -->
+<div class="user-table-container">
+    <h2>لیست کاربران</h2>
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>شناسه</th>
+                <th>نام کاربری</th>
+                <th>ایمیل</th>
+                <th>آخرین ورود</th>
+                <th>*</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <span>{{users$?.operator.}} Users</span> -->
+            <tr *ngFor="let user of users$ | async">
+                <td>{{ user.id }}</td>
+                <td>{{ user.userName }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.onlineAt }}</td>
+                <td>
+                    <button class="btn btn-primary w-100" (click)="getUser(user.id)">Login</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

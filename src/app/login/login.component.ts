@@ -18,15 +18,16 @@ export class LoginComponent {
   onSubmit() {
     var body = { userName: this.email, password: this.password };
 
+    
     this.api.post('Account/Login', body).subscribe({
       next: (response) => {
         console.log(response);
-        if (response.Success && response.HttpCode === 200) {
+        if (response.success && response.httpCode === 200) {
           alert('ورود موفق!');
           this.router.navigate(['/dashboard']);
         }
         else {
-          alert("erorr" + response.HttpCode);
+          alert("erorr" + response.httpCode);
         }
       },
       error: (err) => {
