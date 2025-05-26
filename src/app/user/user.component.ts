@@ -3,6 +3,7 @@ import { ApiService } from '../services/api.service';
 import { UserViewModel } from '../../models/UserViewModel';
 import { ApiResponse } from '../../models/ApiResponse';
 import { map, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user',
@@ -13,9 +14,17 @@ import { map, Observable } from 'rxjs';
 export class UserComponent implements OnInit {
 
 
-  constructor(private api: ApiService) { }
+  constructor(private api: ApiService, private router: Router) { }
   ngOnInit(): void {
-    this.users$ = this.getUsers();
+    this.api.checkLogin().then(sender => {
+      if (sender) {
+        this.users$ = this.getUsers();
+      }
+      else {
+        alert('Auth Error');
+        this.router.navigate(['']);
+      }
+    });
   }
 
   users$: Observable<UserViewModel[]> | undefined;
@@ -23,22 +32,12 @@ export class UserComponent implements OnInit {
   getUsers(): Observable<UserViewModel[]> {
     return this.api.get<UserViewModel[]>('User/Users').pipe(
       map(response => {
-        if (response.success && response.response) {
+        if (response.success && response.httpCode === 200) {
           return response.response;
         } else {
           throw new Error('خطا در دریافت لیست کاربران');
         }
-      })
-    );
+      }));
   }
-
-  getUser(id: string) {
-
-    this.api.get('User/GetDetail', `?userId=${id}`);
-
-
-  }
-
-
 
 }

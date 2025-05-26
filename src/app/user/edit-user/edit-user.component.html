@@ -1,0 +1,36 @@
+<div class="edit-form-wrapper">
+  <h2 class="form-title">Edit User</h2>
+  <form [formGroup]="editForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label>User Name</label>
+      <input formControlName="userName" type="text" />
+    </div>
+
+    <div class="form-group">
+      <label>Phone</label>
+      <input formControlName="phone" type="text" />
+    </div>
+
+    <div class="form-group">
+      <label>Email</label>
+      <input formControlName="email" type="email" />
+    </div>
+
+    <div class="form-group checkbox">
+      <label><input type="checkbox" formControlName="emailConfirmed" /> Email Confirmed</label>
+    </div>
+
+    <div class="form-group checkbox">
+      <label><input type="checkbox" formControlName="phoneConfirmed" /> Phone Confirmed</label>
+    </div>
+
+    <div class="form-group">
+      <label>Gender</label>
+      <select formControlName="genderId">
+        <option *ngFor="let gender of genders$|async" [value]="gender.id">{{ gender.value }}</option>
+      </select>
+    </div>
+
+    <button type="submit" class="submit-button">Save Changes</button>
+  </form>
+</div>

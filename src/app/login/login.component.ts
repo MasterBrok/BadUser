@@ -17,25 +17,43 @@ export class LoginComponent {
 
   onSubmit() {
     var body = { userName: this.email, password: this.password };
-
-    
-    this.api.post('Account/Login', body).subscribe({
-      next: (response) => {
-        console.log(response);
-        if (response.success && response.httpCode === 200) {
-          alert('ورود موفق!');
-          this.router.navigate(['/dashboard']);
-        }
-        else {
-          alert("erorr" + response.httpCode);
-        }
-      },
-      error: (err) => {
-        alert('مشکلی پیش آمده. لطفاً دوباره تلاش کنید.');
+    // this.api.post('Account/Login', body).subscribe({
+    //   next: (response) => {
+    //     if (response.success && response.httpCode === 200) {
+    //       alert('ورود موفق!');
+    //       this.router.navigate(['/dashboard']);
+    //     }
+    //     else {
+    //       alert("erorr" + response.httpCode);
+    //     }
+    //   },
+    //   error: (err) => {
+    //     alert('مشکلی پیش آمده. لطفاً دوباره تلاش کنید.');
+    //   }
+    // });
+    this.api.checkLogin().then((isLoggedIn) => {
+      if (isLoggedIn) {
+        alert('ورود موفق!');
+        this.router.navigate(['/dashboard']);
       }
+      else
+        this.api.post('Account/Login', body).subscribe({
+          next: (response) => {
+            if (response.success && response.httpCode === 200) {
+              alert('ورود موفق!');
+              this.router.navigate(['/dashboard']);
+            }
+            else {
+              alert("erorr" + response.httpCode);
+            }
+          },
+          error: (err) => {
+            alert('مشکلی پیش آمده. لطفاً دوباره تلاش کنید.');
+          }
+        });
+
+
     });
-
-
   }
 
 

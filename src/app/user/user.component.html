@@ -1,6 +1,8 @@
 <!-- users.component.html -->
 <div class="user-table-container">
     <h2>لیست کاربران</h2>
+    <button class="px-3 py-2 bg-blue-500 text-blue rounded hover:bg-blue-400"
+        [routerLink]="['/addUser']">Add User</button>
     <table class="user-table">
         <thead>
             <tr>
@@ -19,7 +21,10 @@
                 <td>{{ user.email }}</td>
                 <td>{{ user.onlineAt }}</td>
                 <td>
-                    <button class="btn btn-primary w-100" (click)="getUser(user.id)">Login</button>
+                    <button [routerLink]="['/editUser']" [queryParams]="{id: user.id}"
+                        class="px-3 py-1 bg-blue-500 text-blue rounded hover:bg-blue-600">
+                        Edit
+                    </button>
                 </td>
             </tr>
         </tbody>

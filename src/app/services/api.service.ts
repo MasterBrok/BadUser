@@ -1,7 +1,7 @@
 // src/app/services/api.service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 // import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -23,15 +23,30 @@ export class ApiService {
     return this.http.post<NoDataApiResponse>(`${this.baseUrl}/${endpoint}`, body);
   }
 
-  // // PUT
-  // put<T>(endpoint: string, body: any): Observable<ApiResponse> {
-  //   return this.http.put<ApiResponse<T>>(`${this.baseUrl}/${endpoint}`, body,{withCredentials:true});
-  // }
+  checkLogin(): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.http.get<NoDataApiResponse>(`${this.baseUrl}/Account/CheckCookies`)
+        .subscribe({
+          next: (res) => {
+            console.log('CheckLogin HTTP Code:', res.httpCode);
+            resolve(res.httpCode === 200);
+          },
+          error: (err) => {
+            console.error('Error in checkLogin:', err);
+            resolve(false);
+          }
+        });
+    });
+  }
+  // PUT
+  put<T>(endpoint: string, body: any): Observable<ApiResponse> {
+    return this.http.put<ApiResponse<T>>(`${this.baseUrl}/${endpoint}`, body);
+  }
 
 }
 
 
-export interface ApiResponse<T = any>  {
+export interface ApiResponse<T = any> {
   messages?: any;
   response: T;
   totalPages: number;
